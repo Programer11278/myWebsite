@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Product Store</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #333;
+      color: white;
+    }
+
+    .cart {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+    }
+
+    .cart-popup {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 30px;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      width: 200px;
+      z-index: 1000;
+    }
+
+    .cart-popup.active {
+      display: block;
+    }
+
+    .product {
+      max-width: 400px;
+      margin: 2rem auto;
+      padding: 2rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .product h2 {
+      margin-top: 0;
+    }
+
+    .product button {
+      margin: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .buy-btn {
+      background-color: green;
+      color: white;
+    }
+
+    .cart-btn {
+      background-color: orange;
+      color: white;
+    }
+
+    .checkout-btn {
+      margin-top: 1rem;
+      background-color: #007BFF;
+      color: white;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Engy Store</h1>
+    <div class="cart" onclick="toggleCart()">
+      🛒 <span class="cart-count" id="cartCount">0</span>
+      <div class="cart-popup" id="cartPopup">
+        <p id="cartItems">Cart is empty</p>
+        <button class="checkout-btn" onclick="checkout()">Checkout</button>
+      </div>
+    </div>
+  </header>
+
+<div class="product">
+  <img src="d:\Stuff\IMG-20250620-WA0003.jpg" alt="Awesome Gadget" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
+  <div class="product">
+    <h2>هنا بنكتب اسم الحاجه</h2>
+    <p>هنا بنكتب موصفات الحاجه</p>
+    <button class="buy-btn" onclick="buyNow()">Buy Now</button>
+
+    <script>
+  async function buyNow() {
+    const response = await fetch('/create-checkout-session', {
+      method: 'POST',
+    });
+    const session = await response.json();
+    window.location.href = session.url;
+  }
+</script>
+
+    <button class="cart-btn" onclick="addToCart()">Add to Cart</button>
+    
+    <br>
+    <!-- Add Facebook logo -->
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Facebook_Logo.png" 
+       alt="Facebook" 
+       style="width: 24px; height: 24px;">
+</a>
+Facebook:
+    <a href="https://www.facebook.com/profile.php?id=61557730355420">Click here</a>
+    <br>
+    <br>
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
+       alt="Instagram" 
+       style="width: 24px; height: 24px;">
+</a>  
+    Instagram: <a href=https://www.instagram.com/heart_picked_by_engy>Click here</a>
+ </div>
+  <script>
+  
+    function updateCartDisplay() {
+      cartCount.textContent = cart.length;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Cart is empty</p>";
+      } else {
+        cartItems.innerHTML = cart.map((item, index) => `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}">
+            <span>${item.name}</span>
+          </div>
+        `).join("");
+      }
+    }
+
+    function addToCart() {
+      cart.push({ name: product.name, image: product.image });
+      updateCartDisplay();
+    }
+
+    function toggleCart() {
+      cartPopup.classList.toggle("active");
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+      } else {
+        alert(`Checking out ${cart.length} item(s). Thank you!`);
+        cart = [];
+        updateCartDisplay();
+        toggleCart();
+      }
+    }
+
+    function buyNow() {
+      alert("Thanks for your purchase of: " + product.name);
+    }
+  </script>
+  
+  <div class="product">
+  <img src="d:\Stuff\IMG-20250620-WA0002.jpg" alt="Awesome Gadget" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
+  <div class="product">
+    <h2>هنا بنكتب اسم الحاجه</h2>
+    <p>هنا بنكتب موصفات الحاجه</p>
+    <button class="buy-btn" onclick="buyNow()">Buy Now</button>
+
+    <script>
+  async function buyNow() {
+    const response = await fetch('/create-checkout-session', {
+      method: 'POST',
+    });
+    const session = await response.json();
+    window.location.href = session.url;
+  }
+</script>
+
+    <button class="cart-btn" onclick="addToCart()">Add to Cart</button>
+    
+    <br>
+    <!-- Add Facebook logo -->
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Facebook_Logo.png" 
+       alt="Facebook" 
+       style="width: 24px; height: 24px;">
+</a>
+Facebook:
+    <a href="https://www.facebook.com/profile.php?id=61557730355420">Click here</a>
+    <br>
+    <br>
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
+       alt="Instagram" 
+       style="width: 24px; height: 24px;">
+</a>  
+    Instagram: <a href=https://www.instagram.com/heart_picked_by_engy>Click here</a>
+ </div>
+  <script>
+
+    function updateCartDisplay() {
+      cartCount.textContent = cart.length;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Cart is empty</p>";
+      } else {
+        cartItems.innerHTML = cart.map((item, index) => `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}">
+            <span>${item.name}</span>
+          </div>
+        `).join("");
+      }
+    }
+
+    function addToCart() {
+      cart.push({ name: product.name, image: product.image });
+      updateCartDisplay();
+    }
+
+    function toggleCart() {
+      cartPopup.classList.toggle("active");
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+      } else {
+        alert(`Checking out ${cart.length} item(s). Thank you!`);
+        cart = [];
+        updateCartDisplay();
+        toggleCart();
+      }
+    }
+
+    function buyNow() {
+      alert("Thanks for your purchase of: " + product.name);
+    }
+  </script>
+
+  <div class="product">
+  <img src="d:\Stuff\IMG-20250620-WA0004.jpg" alt="Awesome Gadget" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
+  <div class="product">
+    <h2>هنا بنكتب اسم الحاجه</h2>
+    <p>هنا بنكتب موصفات الحاجه</p>
+    <button class="buy-btn" onclick="buyNow()">Buy Now</button>
+
+    <script>
+  async function buyNow() {
+    const response = await fetch('/create-checkout-session', {
+      method: 'POST',
+    });
+    const session = await response.json();
+    window.location.href = session.url;
+  }
+</script>
+
+    <button class="cart-btn" onclick="addToCart()">Add to Cart</button>
+    
+    <br>
+    <!-- Add Facebook logo -->
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Facebook_Logo.png" 
+       alt="Facebook" 
+       style="width: 24px; height: 24px;">
+</a>
+Facebook:
+    <a href="https://www.facebook.com/profile.php?id=61557730355420">Click here</a>
+    <br>
+    <br>
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
+       alt="Instagram" 
+       style="width: 24px; height: 24px;">
+</a>  
+    Instagram: <a href=https://www.instagram.com/heart_picked_by_engy>Click here</a>
+ </div>
+  <script>
+  
+    function updateCartDisplay() {
+      cartCount.textContent = cart.length;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Cart is empty</p>";
+      } else {
+        cartItems.innerHTML = cart.map((item, index) => `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}">
+            <span>${item.name}</span>
+          </div>
+        `).join("");
+      }
+    }
+
+    function addToCart() {
+      cart.push({ name: product.name, image: product.image });
+      updateCartDisplay();
+    }
+
+    function toggleCart() {
+      cartPopup.classList.toggle("active");
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+      } else {
+        alert(`Checking out ${cart.length} item(s). Thank you!`);
+        cart = [];
+        updateCartDisplay();
+        toggleCart();
+      }
+    }
+
+    function buyNow() {
+      alert("Thanks for your purchase of: " + product.name);
+    }
+  </script>
+  
+  <div class="product">
+  <img src="d:\Stuff\IMG-20250620-WA0002.jpg" alt="Awesome Gadget" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
+  <div class="product">
+    <h2>هنا بنكتب اسم الحاجه</h2>
+    <p>هنا بنكتب موصفات الحاجه</p>
+    <button class="buy-btn" onclick="buyNow()">Buy Now</button>
+
+    <script>
+  async function buyNow() {
+    const response = await fetch('/create-checkout-session', {
+      method: 'POST',
+    });
+    const session = await response.json();
+    window.location.href = session.url;
+  }
+</script>
+
+    <button class="cart-btn" onclick="addToCart()">Add to Cart</button>
+    
+    <br>
+    <!-- Add Facebook logo -->
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Facebook_Logo.png" 
+       alt="Facebook" 
+       style="width: 24px; height: 24px;">
+</a>
+Facebook:
+    <a href="https://www.facebook.com/profile.php?id=61557730355420">Click here</a>
+    <br>
+    <br>
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
+       alt="Instagram" 
+       style="width: 24px; height: 24px;">
+</a>  
+    Instagram: <a href=https://www.instagram.com/heart_picked_by_engy>Click here</a>
+ </div>
+  <script>
+    let cart = [];
+    const cartCount = document.getElementById("cartCount");
+    const cartItems = document.getElementById("cartItems");
+    const cartPopup = document.getElementById("cartPopup");
+    const product = {
+      name: "Awesome Gadget",
+      image: "d:\Stuff\IMG-20250620-WA0003.jpg" 
+    };
+
+    function updateCartDisplay() {
+      cartCount.textContent = cart.length;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Cart is empty</p>";
+      } else {
+        cartItems.innerHTML = cart.map((item, index) => `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}">
+            <span>${item.name}</span>
+          </div>
+        `).join("");
+      }
+    }
+
+    function addToCart() {
+      cart.push({ name: product.name, image: product.image });
+      updateCartDisplay();
+    }
+
+    function toggleCart() {
+      cartPopup.classList.toggle("active");
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+      } else {
+        alert(`Checking out ${cart.length} item(s). Thank you!`);
+        cart = [];
+        updateCartDisplay();
+        toggleCart();
+      }
+    }
+
+    function buyNow() {
+      alert("Thanks for your purchase of: " + product.name);
+    }
+  </script>
+</body>
+</html>
